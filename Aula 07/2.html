@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Métodos de Seleção</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        padding: 40px;
+        line-height: 1.6;
+      }
+
+      h1 {
+        color: #0057b7;
+        border-bottom: 2px solid #0057b7;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #eb9915;
+        border-bottom: 2px solid #eb9915;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        background-color: #e1f5fe;
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        margin-top: 20px;
+        padding-left: 20px;
+      }
+
+      li {
+        background-color: #fff3e0;
+        padding: 10px;
+        margin-bottom: 6px;
+        border-radius: 5px;
+        list-style-type: disc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="titulo">DOM</h1>
+    <p id="paragrafo">
+      O DOM é a sigla para
+      <strong>Document Object Model (Modelo de Objeto de Documento)</strong>,
+      uma interface de programação que representa um documento HTML, XML ou SVG
+      como uma estrutura de árvore lógica, onde cada parte do documento é um nó.
+    </p>
+
+    <h2>Tópicos importantes</h2>
+    <ul>
+      <li class="item" name="item">Seleção de elementos</li>
+      <li class="item" name="item">Manipulação de elementos</li>
+      <li class="item" name="item">Eventos</li>
+    </ul>
+
+    <script>
+        // Forma inviável de fezr
+        let textoTitulo = document.body. firstElementChild.textContent;
+        console.log(textoTitulo);
+
+        //Selecionar pelo ID:
+        // const h1 = document.getElementById("titulo");
+
+        // const h1Texto = h1.textContent;
+
+        // console.log(h1);  
+        // console.log(h1Texto);
+
+        // const p = document.getElementById("paragrafo");
+        // const pTexto = p.textContent;
+
+        // console.log(p);
+        // console.log(pTexto);
+
+        // const pHTML = p.innerHTML;
+
+        // console.log(pHTML);
+
+        //Selecionar pela classe:
+        // const itens = document.getElementsByClassName("item");
+
+        // const item1 = itens[0];
+
+        // const item1Texto = item1.textContent;
+
+        // console.log(itens);
+        // console.log(item1);
+        // console.log(item1Texto);
+
+
+        // Selecionar pela tag:
+        // const itensTag = document.getElementsByTagName("li");
+        // const item2 = itensTag[1];
+        // const item2Texto = item2.textContent;
+        // console.log(itensTag);
+        // console.log(item2);
+        // console.log(item2Texto);
+
+
+        //Selecionar por NAME do elemento:
+        // const itensName = document.getElementsByName("item");
+        // const item3 = itensName[2];
+        // const item3Texto = item3.textContent;
+
+        // console.log(itensName);
+        // console.log(item3);
+        // console.log(item3Texto);
+
+        // Retorna um NodeList, que é uma coleção de nós, semelhante a um array, mas não é um array real. Ele possui métodos como forEach para iterar sobre os elementos, mas não possui métodos de array como map ou filter.
+
+        // A diferença entre HTMLCollection e NodeList é que HTMLCollection é uma coleção ao vivo, ou seja, se o DOM for modificado e novos elementos forem adicionados ou removidos, a coleção será atualizada automaticamente. Já o NodeList pode ser estático ou ao vivo, dependendo do método usado para obtê-lo. Por exemplo, querySelectorAll retorna um NodeList estático, enquanto getElementsByTagName retorna um HTMLCollection ao vivo.
+
+        //Métodos Genericos de Seleção:
+
+        // const h1 = document.querySelector("#titulo");
+        // const h1Texto = h1.textContent;
+        // const p = document.querySelector("#paragrafo");
+        // const pTexto = p.textContent;
+
+        // console.log(h1);
+        // console.log(h1Texto);
+        // console.log(p);
+        // console.log(pTexto);
+
+        // const itens = document.querySelectorAll(".item");
+        // const item1 = itens[0];
+        // const item1Texto = item1.textContent;
+
+        // console.log(itens);
+        // console.log(item1); 
+        // console.log(item1Texto);
+
+        // O querySelectorAll retorna um NodeList, que é uma coleção de nós, semelhante a um array, mas não é um array real. Ele possui métodos como forEach para iterar sobre os elementos, mas não possui métodos de array como map ou filter.
+
+        //Vantagens de usar NodeList:
+        // 1. Métodos de Iteração: NodeList possui métodos como forEach, o que facilita a iteração sobre os elementos selecionados.
+        // 2. Flexibilidade: NodeList pode ser obtido usando métodos como querySelectorAll, que permitem seleções mais complexas usando seletores CSS.
+        // 3. Compatibilidade: NodeList é amplamente suportado em navegadores modernos, tornando-o uma escolha popular para manipulação de DOM.
+        // 4. Melhor Desempenho: Em alguns casos, NodeList pode oferecer melhor desempenho em comparação com HTMLCollection, especialmente quando se trata de seleções complexas ou quando o DOM é modificado frequentemente. 
+
+        // itens.forEach((item, index) => {
+        //     console.log(`${index} - ${item.textContent}`);
+        // });
+
+
+        //Manipulação do DOM:
+
+        // const p = document.querySelector("#paragrafo");
+        // p.textContent = "O texto foi substituido por JavaScript! utilizando a propriedade textContent.";
+
+        // p.innerHTML = "O texto foi <strong>substituido por JavaScript!</strong> utilizando a propriedade innerHTML, que permite inserir HTML dentro do elemento.";
+
+        //mudar o texto do segundo intem d alista  para "Texto alterado".
+
+        // const itens = document.querySelectorAll(".item");
+        // itens[1].textContent = "Texto alterado";
+
+
+        // manipulação de estilos;
+
+        // const h1 = document.querySelector("#titulo");
+        // h1.style.fontSize = "42px";
+        // h1.style.backgroundColor = "#e1f5fe";
+        // h1.style.padding = "10px";
+
+        // const itens = document.querySelectorAll(".item");
+
+        // const item1 = itens[0];
+        // const item2 = itens[1];
+        // const item3 = itens[2];
+
+        // item1.style.fontSize = "18px";
+        // item2.style.fontSize = "18px";
+        // item3.style.fontSize = "18px";
+
+
+        //ou
+
+        itens.forEach((item) => {
+            item.style.fontSize = "18px";
+            item.style.backgroundColor = "#eb9915";
+            item.style.textAlign = "center";
+            item.style.listStyle = "none";
+            item.style.fontWeight = "bold";
+        });
+
+        
+
+
+
+
+
+    
+
+
+
+
+    </script>
+  </body>
+</html>
