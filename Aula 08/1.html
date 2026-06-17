@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventos</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        padding: 40px;
+        line-height: 1.6;
+      }
+
+      h1 {
+        color: #0057b7;
+        border-bottom: 2px solid #0057b7;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #eb9915;
+        border-bottom: 2px solid #eb9915;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+      }
+
+      p:nth-of-type(1) {
+        background-color: #e1f5fe;
+      }
+
+      p:nth-of-type(2) {
+        background-color: #fff3e0;
+      }
+
+      ol {
+        margin-top: 20px;
+        padding-left: 20px;
+      }
+
+      li {
+        background-color: #fff3e0;
+        padding: 10px;
+        margin-bottom: 6px;
+        border-radius: 5px;
+      }
+
+      li::marker {
+        font-weight: bold;
+      }
+
+      button {
+        padding: 8px 12px;
+        background-color: #1b1b1b;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #404040;
+      }
+
+      #mensagem {
+        margin-top: 20px;
+        padding: 12px 16px;
+        background-color: #404040;
+        border-radius: 4px;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔵 Eventos</h1>
+    <p>
+      Eventos DOM HTML <strong>são sinais de que algo ocorreu</strong>, acionados por interações do usuário (como cliques de mouse) ou pelo navegador (como o carregamento da página). Eles permitem que o JavaScript responda a essas ações, adicionando manipuladores de eventos a elementos HTML para executar código específico.
+    </p>
+
+    <h2>🔍 Como adicionar eventos ?</h2>
+    <p>
+      O JavaScript fornece diferentes formas de detectar e responder a eventos no DOM. Sempre que um evento ocorre, o navegador gera um  <strong>objeto de evento</strong>, que contém informações sobre o que aconteceu. A estrutura básica para lidar com eventos envolve três etapas:
+    </p>
+    <ol>
+      <li>Selecionar o elemento HTML onde o evento ocorrerá.</li>
+      <li>Definir a função que será executada quando o evento ocorrer.</li>
+      <li>Especificar o tipo de evento a ser monitorado (ex.: clique, tecla pressionada, envio de formulário).</li>
+    </ol>
+
+    <h3>Exemplo</h3>
+
+    <button id="btnClique">Clique em mim!</button>
+
+    <p id="mensagem">Nenhuma ação realizada ainda.</p>
+    <script>
+      // 1. Selecionar o botão pelo ID
+      const botao = document.getElementById("btnClique");
+
+      // 2. Definir a função que será executada ao clicar
+      function aoClicar(event) {
+        console.log("Evento detectado:", event);
+
+        const paragrafo = document.getElementById("mensagem");
+        paragrafo.textContent = "Você clicou no botão! 🎉";
+
+        botao.textContent = "Desativado";
+        botao.disabled = true;
+        botao.style.backgroundColor = "#999";
+        botao.style.cursor = "not-allowed";
+      }
+
+      // 3. Adicionar o listener para o evento 'click'
+      botao.addEventListener("click", aoClicar);
+    </script>
+  </body>
+</html>
