@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue-200: hsl(193, 38%, 86%);
+  --green-300: hsl(150, 100%, 66%);
+  --blue-600: hsl(217, 19%, 38%);
+  --blue-900: hsl(217, 19%, 24%);
+  --blue-950: hsl(218, 23%, 16%);
+}
+
+html {
+  font-size: 28px;
+}
+
+body {
+  height: 100vh;
+  font-family: "Manrope", sans-serif;
+  background-color: var(--blue-950);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.card {
+  background-color: var(--blue-900);
+  width: 480px;
+  padding: 1.5rem 1.5rem 3rem;
+  border-radius: .5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.card__title {
+  color: var(--green-300);
+  text-transform: uppercase;
+  font-size: .5rem;
+  font-weight: 500;
+  letter-spacing: .2rem;
+}
+
+.card__advice {
+  color: var(--blue-200);
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.6;
+  font-size: .8rem;
+}
+
+.card__button {
+  border: none;
+  cursor: pointer;
+  background-color: var(--green-300);
+  padding: .5rem;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -25px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card__button:hover {
+  box-shadow: 0 0 10px var(--green-300);
+}
