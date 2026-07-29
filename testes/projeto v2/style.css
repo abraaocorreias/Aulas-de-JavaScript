@@ -1,0 +1,844 @@
+/* ===================================================
+   1. RESET
+=================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===================================================
+   2. VARIÁVEIS (TEMA ESCURO - PADRÃO)
+=================================================== */
+:root {
+    --bg-color: #14161b;           /* Deep charcoal, levemente azulado */
+    --bg-color-alt: #191c22;
+    --card-bg: #1e2129;
+    --text-light: #f0ebe0;         /* Creme / off-white */
+    --text-muted: #8c8577;
+    --accent-color: #d99a44;       /* Âmbar, luz de válvula */
+    --accent-hover: #c2822e;
+    --accent-text: #1b140a;        /* Texto escuro sobre o âmbar */
+    --accent-rgb: 217, 154, 68;
+    --sage-color: #93a889;         /* Verde sálvia (acento secundário) */
+    --sage-rgb: 147, 168, 137;
+    --surface-rgb: 255, 255, 255;
+    --border-color: #2b2e37;
+    --danger-color: #e2665f;
+    --danger-rgb: 226, 102, 95;
+}
+
+/* ===================================================
+   2b. VARIÁVEIS (TEMA CLARO)
+=================================================== */
+body.light-theme {
+    --bg-color: #f6f2ea;
+    --bg-color-alt: #efe7d8;
+    --card-bg: #ffffff;
+    --text-light: #211d17;
+    --text-muted: #766f60;
+    --accent-color: #b9762b;
+    --accent-hover: #9c631f;
+    --accent-text: #ffffff;
+    --accent-rgb: 185, 118, 43;
+    --sage-color: #5f7a57;
+    --sage-rgb: 95, 122, 87;
+    --surface-rgb: 0, 0, 0;
+    --border-color: #e1d9c6;
+    --danger-color: #c94a42;
+    --danger-rgb: 201, 74, 66;
+}
+
+/* ===================================================
+   3. LAYOUT / CONTAINER
+=================================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+}
+
+/* ===================================================
+   3b. HEADER (HERO)
+=================================================== */
+.site-header {
+    position: relative;
+    padding: 4rem 5% 3.5rem;
+    text-align: center;
+    background-color: var(--bg-color-alt);
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(var(--accent-rgb), 0.14) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    pointer-events: none;
+}
+
+.header-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.75rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    letter-spacing: -0.5px;
+}
+
+.logo p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+}
+
+.btn-tema {
+    position: absolute;
+    top: 1.5rem;
+    right: 5%;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-tema:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.gallery-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.input-busca-local {
+    flex: 1;
+    min-width: 180px;
+    max-width: 320px;
+    margin-bottom: 0;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+}
+
+.input-busca-local:focus {
+    border-color: var(--accent-color);
+}
+
+#ordenar-reviews {
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+/* ===================================================
+   4. BOTÕES
+=================================================== */
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary, .btn-salvar, #btn-buscar-api {
+    background-color: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.btn-primary:hover, .btn-salvar:hover, #btn-buscar-api:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* Botão Flutuante (FAB) - Nova Avaliação */
+.btn-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: var(--accent-text);
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+    z-index: 500;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+}
+
+.btn-fab:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 26px rgba(var(--accent-rgb), 0.35);
+}
+
+/* ===================================================
+   5. FORMULÁRIO E BUSCA
+=================================================== */
+.search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ===================================================
+   5b. RESULTADOS DA BUSCA (API)
+=================================================== */
+.api-results {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.api-msg {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+}
+
+.api-result-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem;
+    transition: border-color 0.2s ease;
+}
+
+.api-result-card:hover {
+    border-color: var(--accent-color);
+}
+
+.api-result-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.api-result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.api-result-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.api-result-artist {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-selecionar {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.btn-selecionar:hover {
+    background-color: var(--accent-color);
+    color: var(--accent-text);
+}
+
+/* ===================================================
+   5c. FALLBACK DE CADASTRO MANUAL
+=================================================== */
+.btn-link-manual {
+    background: transparent;
+    border: none;
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+}
+
+.btn-link-manual:hover {
+    color: var(--accent-hover);
+}
+
+.manual-add {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ===================================================
+   5d. DASHBOARD (ESTATÍSTICAS)
+=================================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+}
+
+.stat-card h4 {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1.1;
+}
+
+.stat-equip-nome {
+    font-size: 1rem !important;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===================================================
+   6. CARDS (GALERIA)
+=================================================== */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.14);
+}
+
+.card-media {
+    position: relative;
+}
+
+.card-media img {
+    width: 100%;
+    border-radius: 8px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    display: block;
+}
+
+.card-actions {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    gap: 0.4rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.card:hover .card-actions,
+.card:focus-within .card-actions {
+    opacity: 1;
+}
+
+.card-actions button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 0;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f0ebe0;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-editar:hover {
+    border-color: var(--accent-color);
+}
+
+.btn-excluir:hover {
+    border-color: var(--danger-color);
+}
+
+.card-stars {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--accent-color);
+    margin-top: 0.3rem;
+}
+
+.card-tags-mini {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.1rem;
+}
+
+.tag-icon {
+    font-size: 1.05rem;
+    opacity: 0.85;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.card-artist {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.card-tech {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    background: rgba(var(--accent-rgb), 0.12);
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+}
+
+.card-tech.card-tech-eq {
+    color: var(--sage-color);
+    background: rgba(var(--sage-rgb), 0.14);
+}
+
+/* ===================================================
+   7. MODAL
+=================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid var(--border-color);
+    animation: slideUp 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-overlay.hidden {
+    animation: none;
+}
+
+.fechar-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    border: none;
+}
+
+.fechar-modal:hover {
+    color: var(--accent-color);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ===================================================
+   7b. MODAL DE LEITURA (MODO DETALHADO)
+=================================================== */
+.modal-leitura-content {
+    max-width: 460px;
+    text-align: left;
+}
+
+#leitura-capa {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+}
+
+.modal-leitura-content h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+}
+
+.leitura-artista {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.2rem;
+}
+
+.leitura-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 0.6rem;
+}
+
+.leitura-stars {
+    font-size: 1.4rem;
+    color: var(--accent-color);
+    margin-top: 0.9rem;
+}
+
+.leitura-nota-num {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+    letter-spacing: normal;
+}
+
+.leitura-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.leitura-observacao {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* ===================================================
+   8. RESPONSIVIDADE
+=================================================== */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 3.5rem 5% 2.5rem;
+    }
+
+    .btn-tema {
+        top: 1rem;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .btn-fab {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        width: 54px;
+        height: 54px;
+        font-size: 1.7rem;
+    }
+}
+
+/* ===================================================
+   9. SISTEMA DE NOTAS (ESTRELAS CLICÁVEIS)
+=================================================== */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 0.2rem;
+    margin-bottom: 1rem;
+}
+
+.star-rating input {
+    display: none; /* Esconde a bolinha do radio button */
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: var(--border-color);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+/* Pinta de âmbar as estrelas anteriores quando passa o mouse ou clica */
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: var(--accent-color);
+}
+
+/* ===================================================
+   9.A. SISTEMA DE NOTAS (CLIQUE DUPLO)
+=================================================== */
+.star-rating-custom {
+    display: flex;
+    gap: 0.2rem;
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    cursor: pointer;
+    
+    /* Evita que o texto seja selecionado de azul ao dar duplo clique */
+    user-select: none; 
+    -webkit-user-select: none;
+}
+
+.star-rating-custom .star {
+    color: var(--text-muted);
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.star-rating-custom .star:active {
+    transform: scale(0.9);
+}
+
+/* ===================================================
+   10. TOASTS
+=================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2000;
+}
+
+.toast {
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: var(--card-bg);
+    border-left: 4px solid var(--accent-color);
+    color: var(--text-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 300px;
+    animation: slideInRight 0.3s ease, fadeOutToast 0.3s ease 2.7s forwards;
+}
+
+.toast.error {
+    border-left-color: var(--danger-color);
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOutToast {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* ===================================================
+   11. ANIMAÇÃO DE ENTRADA DOS CARDS
+=================================================== */
+.card {
+    animation: fadeInCard 0.4s ease backwards;
+}
+
+@keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================================================
+   12. MODAL DE CONFIRMAÇÃO CUSTOMIZADO
+=================================================== */
+.modal-confirm-content {
+    max-width: 350px;
+    text-align: center;
+    padding: 2rem;
+}
+
+.modal-confirm-title {
+    margin-bottom: 0.5rem;
+    color: var(--danger-color);
+}
+
+.modal-confirm-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.modal-confirm-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.modal-confirm-actions button {
+    padding: 0.7rem 1.3rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.btn-confirm-cancel {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+}
+
+.btn-confirm-cancel:hover {
+    border-color: var(--text-light);
+}
+
+.btn-confirm-delete {
+    background: var(--danger-color);
+    color: #fff;
+}
+
+.btn-confirm-delete:hover {
+    background: rgba(var(--danger-rgb), 0.85);
+    transform: translateY(-2px);
+}

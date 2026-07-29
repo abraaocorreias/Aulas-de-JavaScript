@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reso - Diário Audiófilo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cabeçalho Principal -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <h1>🎧 Reso</h1>
+                <p>Seu laboratório de escuta crítica</p>
+            </div>
+        </div>
+        <button id="btn-tema" class="btn-tema" aria-label="Alternar tema claro/escuro" title="Alternar tema">🌙</button>
+    </header>
+
+    <main class="container">
+        <!-- Galeria de Avaliações -->
+        <section class="gallery-section">
+            <h2>Meus Registros</h2>
+
+            <!-- Dashboard Estatístico -->
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <h4>Avaliações</h4>
+                    <p id="stat-total">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Média de Notas</h4>
+                    <p id="stat-media">0.0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Artistas Únicos</h4>
+                    <p id="stat-artistas">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Mais Utilizado</h4>
+                    <p id="stat-equipamento">-</p>
+                </div>
+            </div>
+
+            <div class="gallery-controls">
+                <input type="text" id="busca-local" placeholder="🔍 Buscar nas minhas avaliações..." class="input-busca-local">
+
+                <select id="ordenar-reviews">
+                    <option value="recentes">Mais Recentes</option>
+                    <option value="nota">Maior Nota</option>
+                    <option value="artista">Artista (A-Z)</option>
+                    <option value="album">Álbum (A-Z)</option>
+                </select>
+            </div>
+            <div id="album-gallery" class="grid-container">
+                <!-- Os cards gerados pelo JS aparecerão aqui -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Botão Flutuante de Nova Avaliação -->
+    <button id="btn-nova-escuta" class="btn-fab" aria-label="Nova avaliação" title="Nova avaliação">+</button>
+
+    <!-- Modal de Cadastro / Edição (Escondido por padrão) -->
+    <div id="modal-avaliacao" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="btn-fechar-modal" class="fechar-modal">X</button>
+            
+            <!-- Passo 1: Busca na API -->
+            <div id="passo-1-busca" class="modal-step">
+                <h3>Buscar Álbum</h3>
+                <div class="search-box">
+                    <input type="text" id="input-busca" placeholder="Digite o nome do álbum ou artista...">
+                    <button id="btn-buscar-api">Pesquisar</button>
+                </div>
+                <div id="resultado-api" class="api-results">
+                    <!-- Resultado da busca aparece aqui -->
+                </div>
+
+                <button type="button" id="btn-toggle-manual" class="btn-link-manual">
+                    Não encontrou o álbum? Adicionar manualmente
+                </button>
+
+                <div id="form-manual" class="manual-add hidden">
+                    <p class="api-msg">
+                        Alguns álbuns (ex: conteúdo marcado como "explícito") não aparecem
+                        na busca por uma limitação da API do iTunes. Preencha os dados abaixo:
+                    </p>
+                    <label for="manual-titulo">Título do álbum:</label>
+                    <input type="text" id="manual-titulo" placeholder="Ex: Confessions II">
+
+                    <label for="manual-artista">Artista:</label>
+                    <input type="text" id="manual-artista" placeholder="Ex: Madonna">
+
+                    <label for="manual-capa">URL da capa (opcional):</label>
+                    <input type="text" id="manual-capa" placeholder="https://...">
+
+                    <button type="button" id="btn-usar-manual" class="btn-salvar">Usar estes dados</button>
+                </div>
+            </div>
+
+            <!-- Passo 2: Formulário de Avaliação (Escondido até a busca dar certo) -->
+            <div id="passo-2-form" class="modal-step hidden">
+                <h3>Detalhes da Escuta</h3>
+                <form id="form-review">
+                    <input type="hidden" id="album-titulo">
+                    <input type="hidden" id="album-artista">
+                    <input type="hidden" id="album-capa">
+                    
+                    <label>Nota da Escuta: <span id="display-nota">5</span>/5</label>
+                    <div class="star-rating-custom" id="star-container">
+                        <span class="star" data-valor="1">★</span>
+                        <span class="star" data-valor="2">★</span>
+                        <span class="star" data-valor="3">★</span>
+                        <span class="star" data-valor="4">★</span>
+                        <span class="star" data-valor="5">★</span>
+                    </div>
+                    <input type="hidden" id="nota" value="5" required>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: -10px; margin-bottom: 1rem;">
+                        Dica: Dê um duplo clique para nota com meia estrela (ex: 3.5).
+                    </p>
+                    
+                    <label for="equipamento">Equipamento Utilizado (Fone/Caixa):</label>
+                    <input type="text" id="equipamento" list="lista-equipamentos" placeholder="Ex: WH950NB" required autocomplete="off">
+                    <datalist id="lista-equipamentos"></datalist>
+
+                    <label for="dac">DAC / Amplificador:</label>
+                    <input type="text" id="dac" list="lista-dacs" placeholder="Ex: Fiio KA11" autocomplete="off">
+                    <datalist id="lista-dacs"></datalist>
+
+                    <label for="peace-eq">Perfil PEACE EQ (Opcional):</label>
+                    <input type="text" id="peace-eq" list="lista-eqs" placeholder="Ex: Harman Target" autocomplete="off">
+                    <datalist id="lista-eqs"></datalist>
+
+                    <label for="observacao">Observações Sonoras:</label>
+                    <textarea id="observacao" rows="4" placeholder="Ex: Excelente palco sonoro, graves profundos..."></textarea>
+                    
+                    <button type="submit" class="btn-salvar">Salvar no Diário</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Leitura (Modo Detalhado) -->
+    <div id="modal-leitura" class="modal-overlay hidden">
+        <div class="modal-content modal-leitura-content">
+            <button id="btn-fechar-leitura" class="fechar-modal">X</button>
+            <img id="leitura-capa" src="" alt="">
+            <h3 id="leitura-titulo"></h3>
+            <p id="leitura-artista" class="leitura-artista"></p>
+            <div id="leitura-meta" class="leitura-meta"></div>
+            <div id="leitura-stars" class="leitura-stars"></div>
+            <div id="leitura-tags" class="leitura-tags"></div>
+            <p id="leitura-observacao" class="leitura-observacao"></p>
+        </div>
+    </div>
+
+    <!-- Container dos Toasts -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal de Confirmação Personalizado -->
+    <div id="modal-confirm" class="modal-overlay hidden">
+        <div class="modal-content modal-confirm-content">
+            <h3 class="modal-confirm-title">Excluir Avaliação?</h3>
+            <p class="modal-confirm-text">Essa ação não pode ser desfeita.</p>
+            <div class="modal-confirm-actions">
+                <button id="btn-confirm-cancel" class="btn-confirm-cancel">Cancelar</button>
+                <button id="btn-confirm-delete" class="btn-confirm-delete">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

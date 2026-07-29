@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reso: diário pessoal de escutas críticas e avaliações de álbuns.">
+    <title>Reso — Diário Audiófilo</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <a class="brand" href="#" aria-label="Página inicial do Reso">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>
+                    <strong>Reso</strong>
+                    <small>Diário de escutas críticas</small>
+                </span>
+            </a>
+
+            <div class="header-actions">
+                <button id="btn-tema" class="btn-theme" type="button" aria-label="Ativar tema claro" title="Alternar tema claro e escuro">
+                    <span id="icone-tema" aria-hidden="true">☀</span>
+                </button>
+
+                <button id="btn-nova-escuta" class="btn btn-primary" type="button">
+                    Nova avaliação
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section aria-labelledby="titulo-registros">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Acervo pessoal</p>
+                    <h1 id="titulo-registros">Minhas escutas</h1>
+                </div>
+                <p id="contador-registros" class="record-count" aria-live="polite">0 registros</p>
+            </div>
+
+            <section class="stats-grid" aria-label="Estatísticas do diário">
+                <article class="stat-card">
+                    <p class="stat-label">Avaliações</p>
+                    <p id="stat-total" class="stat-value">0</p>
+                </article>
+
+                <article class="stat-card">
+                    <p class="stat-label">Média de notas</p>
+                    <p id="stat-media" class="stat-value">★ 0,00</p>
+                </article>
+
+                <article class="stat-card">
+                    <p class="stat-label">Artistas únicos</p>
+                    <p id="stat-artistas" class="stat-value">0</p>
+                </article>
+
+                <article class="stat-card stat-card-equipment">
+                    <p class="stat-label">Mais utilizado</p>
+                    <p id="stat-equipamento" class="stat-value stat-equipment">—</p>
+                    <p id="stat-equipamento-usos" class="stat-detail">Nenhum uso</p>
+                </article>
+            </section>
+
+            <div class="gallery-controls">
+                <div class="field field-search">
+                    <label class="sr-only" for="busca-local">Pesquisar avaliações</label>
+                    <input
+                        type="search"
+                        id="busca-local"
+                        placeholder="Buscar por álbum, artista ou equipamento"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="field field-order">
+                    <label for="ordenar-reviews">Ordenar por</label>
+                    <select id="ordenar-reviews">
+                        <option value="recentes">Mais recentes</option>
+                        <option value="nota">Maior nota</option>
+                        <option value="artista">Artista (A–Z)</option>
+                        <option value="album">Álbum (A–Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="album-gallery" class="album-grid" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p><strong>Reso</strong> — Diário Audiófilo</p>
+            <p style="text-align: right;">@ <strong>Abraão Correia</strong><br>
+                Projeto acadêmico desenvolvido para o<br>
+                curso de JavaScript do OXETECH.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de cadastro e edição -->
+    <div id="modal-avaliacao" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-avaliacao">
+        <div class="modal-content modal-form">
+            <button id="btn-fechar-modal" class="btn-close" type="button" aria-label="Fechar modal">×</button>
+
+            <section id="passo-1-busca" class="modal-step">
+                <p class="eyebrow">Catálogo do iTunes</p>
+                <h2 id="titulo-modal-avaliacao">Localizar álbum</h2>
+                <p class="modal-intro">Pesquise pelo nome do álbum, do artista ou pelos dois.</p>
+
+                <div class="api-search">
+                    <label class="sr-only" for="input-busca">Álbum ou artista</label>
+                    <input type="search" id="input-busca" placeholder="Ex.: Daft Punk Random Access Memories" autocomplete="off">
+                    <button id="btn-buscar-api" class="btn btn-primary" type="button">Pesquisar</button>
+                </div>
+
+                <div id="resultado-api" class="api-results" aria-live="polite"></div>
+
+                <button type="button" id="btn-toggle-manual" class="btn-link">
+                    Não encontrou? Cadastrar manualmente
+                </button>
+
+                <div id="form-manual" class="manual-panel hidden">
+                    <p class="helper-text">
+                        Alguns títulos podem não aparecer por diferenças de catálogo regional ou limitações da busca do iTunes.
+                    </p>
+
+                    <label for="manual-titulo">Título do álbum</label>
+                    <input type="text" id="manual-titulo" placeholder="Nome do álbum">
+
+                    <label for="manual-artista">Artista</label>
+                    <input type="text" id="manual-artista" placeholder="Nome do artista">
+
+                    <label for="manual-capa">URL da capa <span class="optional">(opcional)</span></label>
+                    <input type="url" id="manual-capa" placeholder="https://...">
+
+                    <p id="manual-status" class="form-status" aria-live="polite"></p>
+                    <button type="button" id="btn-usar-manual" class="btn btn-secondary">Continuar</button>
+                </div>
+            </section>
+
+            <section id="passo-2-form" class="modal-step hidden">
+                <div class="modal-title-row">
+                    <div>
+                        <p class="eyebrow">Registro da escuta</p>
+                        <h2>Detalhes da avaliação</h2>
+                    </div>
+                    <button id="btn-trocar-album" class="btn-link compact" type="button">Trocar álbum</button>
+                </div>
+
+                <article class="selected-album" aria-label="Álbum selecionado">
+                    <img id="preview-capa" src="" alt="">
+                    <div>
+                        <h3 id="preview-titulo"></h3>
+                        <p id="preview-artista"></p>
+                        <p id="preview-meta" class="selected-meta"></p>
+                    </div>
+                </article>
+
+                <form id="form-review">
+                    <input type="hidden" id="album-titulo">
+                    <input type="hidden" id="album-artista">
+                    <input type="hidden" id="album-capa">
+
+                    <fieldset class="rating-fieldset">
+                        <legend>Nota da escuta</legend>
+                        <div class="rating-row">
+                            <div id="star-container" class="star-rating" aria-label="Escolha uma nota de 0,5 a 5">
+                                <button class="rating-star" type="button" data-star="1" aria-label="Até 1 estrela">★</button>
+                                <button class="rating-star" type="button" data-star="2" aria-label="Até 2 estrelas">★</button>
+                                <button class="rating-star" type="button" data-star="3" aria-label="Até 3 estrelas">★</button>
+                                <button class="rating-star" type="button" data-star="4" aria-label="Até 4 estrelas">★</button>
+                                <button class="rating-star" type="button" data-star="5" aria-label="Até 5 estrelas">★</button>
+                            </div>
+                            <output id="display-nota" class="rating-value" for="nota">5,0</output>
+                        </div>
+                        <p class="helper-text">Clique no lado esquerdo da estrela para meia nota e no lado direito para nota inteira.</p>
+                        <input type="hidden" id="nota" value="5" required>
+                    </fieldset>
+
+                    <label for="equipamento">Equipamento utilizado</label>
+                    <input type="text" id="equipamento" list="lista-equipamentos" placeholder="Ex.: Edifier WH950NB" required autocomplete="off">
+                    <datalist id="lista-equipamentos"></datalist>
+
+                    <label for="dac">DAC ou amplificador <span class="optional">(opcional)</span></label>
+                    <input type="text" id="dac" list="lista-dacs" placeholder="Ex.: FiiO KA11" autocomplete="off">
+                    <datalist id="lista-dacs"></datalist>
+
+                    <label for="peace-eq">Perfil de equalização <span class="optional">(opcional)</span></label>
+                    <input type="text" id="peace-eq" list="lista-eqs" placeholder="Ex.: Harman Target" autocomplete="off">
+                    <datalist id="lista-eqs"></datalist>
+
+                    <label for="observacao">Impressões sonoras <span class="optional">(opcional)</span></label>
+                    <textarea id="observacao" rows="5" placeholder="Descreva palco sonoro, graves, médios, agudos, dinâmica ou outros aspectos da escuta."></textarea>
+
+                    <p id="form-status" class="form-status" aria-live="polite"></p>
+
+                    <div class="form-actions">
+                        <button id="btn-cancelar-form" class="btn btn-ghost" type="button">Cancelar</button>
+                        <button id="btn-salvar-review" class="btn btn-primary" type="submit">Salvar avaliação</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal de leitura -->
+    <div id="modal-leitura" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="leitura-titulo">
+        <div class="modal-content modal-reading">
+            <button id="btn-fechar-leitura" class="btn-close" type="button" aria-label="Fechar detalhes">×</button>
+            <img id="leitura-capa" class="reading-cover" src="" alt="">
+            <p id="leitura-origem" class="eyebrow"></p>
+            <h2 id="leitura-titulo"></h2>
+            <p id="leitura-artista" class="reading-artist"></p>
+            <p id="leitura-meta" class="reading-meta"></p>
+            <div id="leitura-nota" class="reading-rating"></div>
+            <dl id="leitura-equipamentos" class="equipment-list"></dl>
+            <p id="leitura-observacao" class="reading-note"></p>
+        </div>
+    </div>
+
+    <!-- Confirmação de exclusão -->
+    <div id="modal-confirm" class="modal-overlay hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+        <div class="modal-content modal-confirm">
+            <h2 id="confirm-title">Excluir avaliação?</h2>
+            <p>Esta ação removerá o registro do navegador e não poderá ser desfeita.</p>
+            <div class="form-actions">
+                <button id="btn-confirm-cancel" class="btn btn-ghost" type="button">Cancelar</button>
+                <button id="btn-confirm-delete" class="btn btn-danger" type="button">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
