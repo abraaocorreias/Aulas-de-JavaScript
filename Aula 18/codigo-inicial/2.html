@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      img {
+        width: 100%;
+        border-radius: 5px;
+        border: 2px solid black;
+        box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img id="image" />
+    </div>
+
+    <script>
+      const url = "https://dog.ceo/api/breeds/image/random";
+      const img = document.getElementById("image");
+
+      // fetch(url).then((respose) => {
+      //   if (!respose.ok) {
+      //     throw new Error("Erro ao buscar a imagem");
+      //   }
+      //   return respose.json();
+      // })
+      // .then((data) => {
+      //   img.setAttribute("src", data.message);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      // });
+
+      async function getDogImage() {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error("Erro na requisição.");
+          }
+  
+          const data = await response.json();
+  
+          img.setAttribute("src", data.message);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      getDogImage();
+    </script>
+  </body>
+</html>

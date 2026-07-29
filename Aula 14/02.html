@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOM</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #0057b7;
+      border-bottom: 2px solid #0057b7;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    h2:nth-of-type(1) {
+      color: #eb9915;
+      border-bottom: 2px solid #eb9915;
+    }
+
+    h2:nth-of-type(2) {
+      color: #53a50f;
+      border-bottom: 2px solid #53a50f;
+    }
+
+    p {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    p:nth-of-type(1) {
+      background-color: #e1f5fe;
+    }
+
+    p:nth-of-type(2) {
+      background-color: #fff3e0;
+    }
+
+    p:nth-of-type(3) {
+      background-color: #ecffe4;
+    }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+
+    li {
+      padding: 10px;
+      margin-bottom: 6px;
+      border-radius: 5px;
+    }
+
+    li::marker {
+      font-weight: bold;
+    }
+
+    ul:nth-of-type(1) li {
+      background-color: #fff3e0;
+    }
+
+    ul:nth-of-type(2) li {
+      background-color: #ecffe4;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🔵 Manipulação do DOM</h1>
+  <p>
+    No DOM, podemos fazer manipulações mais complexas como acessar parentes
+    específicos de um elemento (pai, irmão, etc) e criar tags HTML e adicionar
+    usando JavaScript.
+  </p>
+
+  <h2>🔍 Como criar e adicionar elementos ?</h2>
+  <p>
+    É possível criar novos elementos dinamicamente e adicioná-los à página.
+    Isso é útil quando queremos modificar ou expandir a estrutura da nossa
+    página sem recarregar a página inteira. Aqui estão os principais métodos
+    para criar e adicionar elementos ao DOM:
+  </p>
+  <ul>
+    <li>
+      O método
+      <code>createElement()</code> é usado para
+      <strong>criar um novo elemento HTML</strong>.
+    </li>
+    <li>
+      O método
+      <code>appendChild()</code> permite que você
+      <strong>adicionar</strong> um nó como um filho de outro elemento.
+    </li>
+    <li>
+      O método
+      <code>cloneNode()</code> cria um <strong>cópia</strong> exata do nó. A
+      cópia pode ser profunda ou superficial.
+    </li>
+  </ul>
+
+  <h2>🔍 Como remover e substituir elementos ?</h2>
+  <p>
+    Além de criar e adicionar elementos ao DOM, é igualmente importante saber
+    remover e substituir elementos existentes. Isso permite que o conteúdo da
+    página seja dinâmico e interativo. Aqui estão os principais métodos:
+  </p>
+
+  <!-- O método <code>removeChild()</code> <strong>remove um elemento filho</strong> de um elemento pai. -->
+
+  <!-- O método <code>replaceChild()</code> permite <strong>substituir um filho existente por outro</strong> -->
+
+  <!-- O método <code>remove</code> é mais direito. Ele remove o próprio elemento <strong>sem precisar do pai</strong>. -->
+
+  <script>
+    const lista = document.querySelector("ul");
+    const listaCopia = lista.cloneNode(true);
+
+    listaCopia.children[0].innerHTML = "O método <code>removeChild()</code> <strong>remove um elemento filho</strong> de um elemento pai.";
+
+    listaCopia.children[1].innerHTML = "O método <code>replaceChild()</code> permite <strong>substituir um filho existente por outro</strong>";
+
+    listaCopia.children[2].innerHTML = "O método <code>remove</code> é mais direito. Ele remove o próprio elemento <strong>sem precisar do pai</strong>.";
+
+    const body = document.body;
+    body.appendChild(listaCopia);
+  </script>
+</body>
+
+</html>

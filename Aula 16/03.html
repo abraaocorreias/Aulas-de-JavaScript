@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LocalStorage com Array</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      #inputNome {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+
+      .botoes {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      ul li {
+        background: #eee;
+        padding: 8px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Salvando Arrays</h1>
+
+      <input type="text" id="inputNome" placeholder="Digite um nome" />
+
+      <div class="botoes">
+        <button onclick="adicionar()">Adicionar</button>
+        <button onclick="mostrar()">Mostrar Lista</button>
+        <button onclick="limpar()">Limpar Lista</button>
+      </div>
+
+      <ul id="lista"></ul>
+    </div>
+
+    <script>
+      function adicionar() {
+        const input = document.getElementById("inputNome");
+        const nome = input.value;
+
+        input.value = "";
+        input.focus();
+
+        if (!nome) {
+          alert("Por favor, digite um nome antes de salvar.");
+          return;
+        }
+
+        const listaNomes = JSON.parse(localStorage.getItem("listaNomes")) || [];
+
+        listaNomes.push(nome);
+
+        localStorage.setItem("listaNomes", JSON.stringify(listaNomes));
+
+        alert("Nome adicionado!");
+      }
+
+      function mostrar() {
+        const ul = document.getElementById("lista");
+        const listaNomes = JSON.parse(localStorage.getItem("listaNomes")) || [];
+
+        ul.innerHTML = "";
+
+        listaNomes.forEach((nome) => {
+          const li = document.createElement("li");
+          li.textContent = nome;
+          ul.appendChild(li);
+        });
+      }
+
+      function limpar() {
+        localStorage.removeItem("listaNomes");
+        
+        const lista = document.getElementById("lista");
+        lista.innerHTML = "";
+        alert("Lista removida!");
+      }
+    </script>
+  </body>
+</html>

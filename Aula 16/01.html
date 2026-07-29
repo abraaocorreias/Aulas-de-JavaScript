@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LocalStorage</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 320px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      #inputNome {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+
+      .botoes {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      #resultado {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>LocalStorage</h1>
+
+      <input type="text" id="inputNome" placeholder="Digite seu nome" autocomplete="off"/>
+
+      <div class="botoes">
+        <button onclick="enviar()">Enviar</button>
+      </div>
+
+      <p id="resultado"></p>
+    </div>
+
+    <script>
+      function enviar() {
+        const input = document.getElementById("inputNome");
+        const nome = input.value;
+        input.value = "";
+        input.focus();
+
+        if (!nome) {
+          alert("Digite um nome");
+          return;
+        }
+
+        const resultado = document.getElementById("resultado");
+        resultado.textContent = nome;
+      }
+    </script>
+  </body>
+</html>
